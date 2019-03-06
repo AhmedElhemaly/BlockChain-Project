@@ -10,8 +10,8 @@ public class block
         this.index=index;
     	this.previoushash = previoushash;
         this.transaction = transaction;
-        Object[] contens = {transaction.hashCode(),previoushash};
-        this.blockhash=Arrays.hashCode(contens);
+        //Object[] contens = {transaction.hashCode(),previoushash};
+        this.blockhash=transaction.hashCode();
 
 
     }
@@ -30,4 +30,5 @@ public class block
     public int getBlockhash() {
         return blockhash;
     }
+    
 }

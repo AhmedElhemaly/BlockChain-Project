@@ -18,7 +18,14 @@ public class Main {
             bc.addBlock(b,T);
         }
 
-        for (int i=0;i<bc.blocks.size();i++)
-        	System.out.println(bc.blocks.get(i).hashCode());
-    }
+    	System.out.println("Check Validation of this BlocChain");
+    	if (bc.isBlockChainValid())
+    	{
+    		System.out.println("This Blockchain is valid with its codes : ");
+            for (int i=0;i<bc.blocks.size();i++)
+            	System.out.println(bc.blocks.get(i).getBlockhash());    
+    	}
+    	else
+    		System.out.println("Check your Blockchain there is wrong block");
+}
 }
