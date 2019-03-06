@@ -4,15 +4,21 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Main {
-
-    ArrayList<block>blockchain=new ArrayList<>();
-
     public static void main(String[] args) {
+    	Scanner cin=new Scanner (System.in);
+    	String Transaction = "mohamed sent 100 coin to ahmed",T;
+        Blockchain bc=new Blockchain(Transaction);
+        for (int i=0;i<3;i++)
+        {
+            block b=new block();
+            T=cin.nextLine();
+            bc.addBlock(b,T);
+        }
 
-        String [] genasistransaction={"gemy send 100 coin to hemaly"};
-        block genesisblock=new block( 0,genasistransaction);
-        System.out.println(genesisblock.getBlockhash());
+        for (int i=0;i<bc.blocks.size();i++)
+        	System.out.println(bc.blocks.get(i).hashCode());
     }
 }
