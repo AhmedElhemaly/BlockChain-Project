@@ -13,11 +13,12 @@ public class Main {
         Blockchain bc=new Blockchain(Transaction);
         for (int i=0;i<3;i++)
         {
-            block b=new block();
-            T=cin.nextLine();
-            bc.addBlock(b,T);
+        	T=cin.nextLine();
+        	block b=new block(bc.blocks.size()-1,bc.getLastBlock().calculateHash(),T);
+            bc.addNewBlockwithMining(b,5);
         }
-
+        for (int i=0;i<bc.blocks.size();i++)
+        	System.out.println(bc.blocks.get(i).getBlockhash());   
     	System.out.println("Check Validation of this BlocChain");
     	if (bc.isBlockChainValid())
     	{
