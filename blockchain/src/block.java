@@ -2,24 +2,43 @@ import java.util.Arrays;
 public class block
 {
 	private int index;
-    private int previoushash;
+    private String previoushash;
     private String transaction	;
-    private int blockhash;
+    private String blockhash="";
+    private  int nonce;
     public block() {}
-    public block(int index,int previoushash, String transaction) {
+    public block(int index,String previoushash, String transaction) {
         this.index=index;
     	this.previoushash = previoushash;
         this.transaction = transaction;
-        //Object[] contens = {transaction.hashCode(),previoushash};
-        this.blockhash=transaction.hashCode();
-
-
+        this.blockhash=calculateHash();
+        this.nonce=0;
+    }
+    public String calculateHash()
+    {
+        return ""+(this.index+this.previoushash+this.nonce+this.transaction).hashCode();
+    }
+    public void setNonce(int nonce)
+    {
+    	this.nonce=nonce;
+    }
+    public int getNonce()
+    {
+    	return nonce;
     }
     public int getIndex()
     {
     	return index;
     }
-    public int getPrevioushash() {
+    public void setPrevioushash(String previoushash)
+    {
+    	this.previoushash=previoushash;
+    }
+    public void setHash(String blockhash)
+    {
+    	this.blockhash=blockhash;
+    }
+    public String getPrevioushash() {
         return previoushash;
     }
 
@@ -27,8 +46,9 @@ public class block
         return transaction;
     }
 
-    public int getBlockhash() {
+    public String getBlockhash() {
         return blockhash;
     }
+
     
 }
