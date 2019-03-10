@@ -4,26 +4,60 @@ public class Blockchain {
 	public ArrayList<block>blocks=new ArrayList<>();
 	public Blockchain (String genasisBlock)
 	{
-		block genesisblock=new block( 0,0,genasisBlock);
+		block genesisblock=new block(0,null,"Genasis");
 		blocks.add(genesisblock);
 	}
-	public void addBlock(block b,String Transaction)
+	public void addBlock(block b)
 	{
-        b=new block(getChainSize(),blocks.get(getChainSize()-1).getBlockhash(),Transaction);
+        b=new block(getChainSize(),blocks.get(getChainSize()-1).getBlockhash(),b.getTransaction());
 		blocks.add(b);
 	}
 	public int getChainSize()
 	{
 		return blocks.size();
 	}
+	public block getLastBlock()
+	{
+		return blocks.get(blocks.size()-1);
+	}
+	//----------------------------------------------
+	
+	public void addNewBlockwithMining(block b,int diff)
+	{
+		if (diff==0)
+		{
+			this.addBlock(b);
+			return ;
+		}
+		StringBuilder sb=new StringBuilder();
+		for (int i=0;i<diff;i++)
+		{
+			sb.append("0");
+		}
+		String leadingZeros=sb.toString();
+		System.out.println("leadingZeros : " + leadingZeros);
+		b.setPrevioushash(getLastBlock().getBlockhash());
+		b.setHash(b.calculateHash());
+		while (b.getBlockhash().substring(0,diff)!=leadingZeros)
+		{
+			b.setNonce(b.getNonce()+1);
+			b.setHash(b.calculateHash());
+			System.out.println("Current Block's hash : "+b.getBlockhash());
+		}
+		System.out.println("Current Block's hash : "+b.getBlockhash());
+		blocks.add(b);
+	}
+	
+	//----------------------------------------------
+	
 	public boolean blockValidate()
     {
     	block genasisBlock = blocks.get(0);
     	if (genasisBlock.getIndex()!=0)
     		return false;
-    	if (genasisBlock.getPrevioushash()!=0)
+    	if (genasisBlock.getPrevioushash()!=null)
     		return false;
-    	if (genasisBlock.getBlockhash()==0 || genasisBlock.getTransaction().hashCode()!=genasisBlock.getBlockhash())
+    	if (genasisBlock.getBlockhash()==null || Integer.toString(genasisBlock.getTransaction().hashCode())!=genasisBlock.getBlockhash())
     		return false;
     	return true;
     }
@@ -33,11 +67,11 @@ public class Blockchain {
 		      return false;
 		    }
 
-		    if (newBlock.getPrevioushash() == 0  || newBlock.getPrevioushash()!=previousBlock.getBlockhash()) 
+		    if (newBlock.getPrevioushash() == null  || newBlock.getPrevioushash()!=previousBlock.getBlockhash()) 
 		    {
 		      return false;
 		    }
-		    if (newBlock.getBlockhash() == 0  ||  newBlock.getTransaction().hashCode()!=newBlock.getBlockhash())
+		    if (newBlock.getBlockhash() == null  ||  Integer.toString(newBlock.getTransaction().hashCode())!=newBlock.getBlockhash())
 		    {
 		      return false;
 		    }
